@@ -2,7 +2,7 @@
 
 Projeto desenvolvido durante o curso **"Modelos Preditivos em Dados: Detecção de Fraude"** da Alura.
 
-> 🚧 **Em andamento** — o repositório será atualizado conforme o curso avança.
+> ✅ **Curso concluído** — este README foi atualizado para refletir a reta final: árvore de decisão, random forest, comparação de modelos e ajuste de hiperparâmetros.
 
 ---
 
@@ -26,7 +26,7 @@ fraud-detection-ml/
 
 ---
 
-## 🔬 Etapas desenvolvidas até agora
+## 🔬 Etapas desenvolvidas
 
 - [x] Análise exploratória com Pandas (`describe`, `groupby`, `isnull`)
 - [x] Visualização com Pandas Profiling
@@ -36,12 +36,15 @@ fraud-detection-ml/
 - [x] Avaliação de métricas (Acurácia, Recall, Precisão, F1 Score)
 - [x] Matriz de Confusão
 - [x] Curva ROC e AUC
-- [ ] Técnicas de balanceamento de classes *(em breve)*
-- [ ] Comparação com outros modelos *(em breve)*
+- [x] Técnicas de balanceamento de classes (undersampling, oversampling, SMOTE)
+- [x] Árvore de Decisão (`DecisionTreeClassifier`)
+- [x] Random Forest (`RandomForestClassifier`)
+- [x] Comparação entre Regressão Logística, Árvore de Decisão e Random Forest
+- [x] Ajuste de hiperparâmetros com `RandomizedSearchCV`
 
 ---
 
-## 📊 Resultados parciais — Regressão Logística
+## 📊 Resultados — Regressão Logística (linha de base)
 
 | Métrica | Valor |
 |---|---|
@@ -53,7 +56,14 @@ fraud-detection-ml/
 
 A acurácia de 99,9% parece incrível, mas o F1 Score de 7,1% conta a verdade: o modelo detectou apenas **1 fraude de 23** no conjunto de teste. O problema é o desbalanceamento extremo das classes — o modelo aprendeu que dizer "não é fraude" para tudo funciona quase sempre.
 
-A AUC de 95,8% mostra que o modelo **tem potencial** para separar as classes, mas não tem confiança suficiente para cruzar o limiar de decisão. A solução vem nas próximas etapas do curso.
+A AUC de 95,8% mostra que o modelo **tem potencial** para separar as classes, mas não tem confiança suficiente para cruzar o limiar de decisão. As próximas etapas (balanceamento + outros modelos) foram desenhadas exatamente pra resolver isso.
+
+## 🧠 O que cada etapa nova acrescentou
+
+- **Balanceamento de classes** (undersampling, oversampling, SMOTE): sem isso, o modelo aprende que dizer "não é fraude" pra tudo já dá quase 100% de acerto — e fica cego pras poucas fraudes reais. Balancear obriga o modelo a prestar atenção nelas.
+- **Árvore de Decisão:** separa as transações fazendo perguntas sucessivas (ex.: valor acima de tal limite? conta ficou zerada?). Fácil de interpretar, mas sozinha tende a decorar demais o conjunto de treino.
+- **Random Forest:** treina várias árvores em amostras diferentes dos dados e decide por **votação da maioria**, não pela "melhor árvore". Isso costuma deixar o resultado mais equilibrado entre recall e precisão do que uma árvore sozinha.
+- **RandomizedSearchCV:** em vez de escolher os parâmetros do Random Forest no chute, testa várias combinações sorteadas com validação cruzada, otimizando especificamente para **recall** — a métrica mais importante quando o custo de deixar uma fraude passar é maior que o de investigar um caso legítimo à toa.
 
 ---
 
@@ -62,6 +72,7 @@ A AUC de 95,8% mostra que o modelo **tem potencial** para separar as classes, ma
 - Python 3
 - Pandas
 - Scikit-learn
+- imbalanced-learn (SMOTE)
 - Matplotlib
 - ydata-profiling
 
@@ -71,3 +82,4 @@ A AUC de 95,8% mostra que o modelo **tem potencial** para separar as classes, ma
 
 - [Curso Alura — Modelos Preditivos em Dados: Detecção de Fraude](https://www.alura.com.br)
 - [PaySim: A financial mobile money simulator](https://www.kaggle.com/datasets/ealaxi/paysim1)
+
